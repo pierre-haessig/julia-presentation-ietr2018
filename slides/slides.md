@@ -5,7 +5,7 @@ page_number: true
 footer: « Julia, my new optimization friend » | 14 June 2018 | By: Lilian Besson | IETR @ Vannes
 -->
 
-<link rel="stylesheet" type="text/css" href="../common/marp-naereen.css" />
+<link rel="stylesheet" type="text/css" href="common/marp-naereen.css" />
 
 # « Julia, my new optimization friend »
 
