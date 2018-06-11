@@ -2,12 +2,12 @@
 $theme: default
 $size: 4:3
 page_number: true
-footer: « Julia, my new optimization friend » | 14 June 2018 | By: Lilian Besson | IETR @ Vannes
+footer: « Julia, my new computing friend? » | 14 June 2018, IETR@Vannes | By: L. Besson & P. Haessig
 -->
 
 <link rel="stylesheet" type="text/css" href="common/marp-naereen.css" />
 
-# « Julia, my new optimization friend »
+# « Julia, my new friend for computing and optimization? »
 
 - **Intro to the Julia programming language, for MATLAB users**
 
