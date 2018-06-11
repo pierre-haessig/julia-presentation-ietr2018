@@ -1,0 +1,345 @@
+---
+title: Julia, my new optimization friend
+subtitle: Julia introduction for MATLAB users
+author: Lilian Besson
+institute: SCEE Team, IETR, CentraleSupélec, Rennes
+smallinstitute: IETR
+date: Thursday 14th of June, 2018
+lang: english
+babel-lang: english
+handout: true
+numbersections: true
+section-titles: false
+fontsize: 12pt
+include-before:
+  \section*{\hfill{}Julia, my new optimization friend\hfill{}}
+  \subsection*{\hfill{}Julia introduction for MATLAB users\hfill{}}
+---
+
+# « Julia, my new optimization friend »
+
+- **Intro to the Julia programming language, for MATLAB users**
+
+- *Date:* 14th of June 2018
+
+- *Who:* Lilian Besson & Pierre Haessig
+   (SCEE & AUT team @ IETR / CentraleSupélec campus Rennes)
+
+<center><img src="figures/julia_logo.png" width="40%"</center>
+
+---
+
+# Agenda for today [25 min]
+
+1. What is Julia [3 min]
+2. Comparison with MATLAB [3 min]
+3. Examples of problems solved Julia [5 min]
+4. Longer example on optimization with JuMP [10min]
+5. Links for more information ?  [2 min]
+
+---
+
+# 1. What is Julia ?
+
+- Developed and popular from the [last 7 years](https://julialang.org/blog/2012/02/why-we-created-julia)
+- Open-source and free programming language (MIT license)
+- Interpreted *and* compiled, very efficient
+- But easy syntax, dynamic typing, inline documentation etc
+- Multi-platform, imperative
+- MATLAB-like syntax for linear algebra etc
+- Designed and acknowledged as *simple to learn and use*
+- Easy to run your code in parallel (multi-core & cluster)
+- Used worldwide: research, data science, finance etc…
+
+---
+
+# Ressources
+- **Website**: [JuliaLang.org](https://julialang.org/) for the language & [Pkg.JuliaLang.org](https://pkg.julialang.org/) for packages
+- Documentation : [docs.JuliaLang.org](https://docs.julialang.org/en/latest/)
+
+<center><img src="figures/julia_logo.png" width="50%"</center>
+
+---
+
+# Comparison with MATLAB
+
+|  | Julia :smiley: | MATLAB :cry:
+|:-|:-:|:-:|
+| **Cost** | Free :v: | Hundreds of euros / year
+| **License** | Open-source | 1 year user license (no longer after your PhD!)
+| **Comes from** | A non-profit foundation, and the community | MathWorks company
+| **Scope** | Mainly numeric | Numeric only
+| **Performances** | Very good performance | Faster than Python, slower than Julia
+
+---
+
+# Comparison with MATLAB
+
+|  | Julia | MATLAB
+|:-|:-:|:-:|
+| **Packaging** | `Pkg` manager included. Based on `git` + GitHub, very easy to use | Toolboxes already included but :moneybag: have to pay if you wat more!
+| **Editor/IDE** | [*Jupyter*](https://jupyter.org/) is recommended ([*Juno*](http://junolab.org/) is also good) | Good IDE already included
+| **Parallel computations** | Very easy, low overhead cost | Possible, high overhead
+
+---
+
+# Comparison with MATLAB
+
+|  | Julia | MATLAB
+|:-|:-:|:-:|
+| **Usage** | Generic, worldwide :earth_americas: | Research in academia and industry
+| **Fame** | Young but starts to be known | Old and known, in decline
+| **Support?** | Community$^1$ (StackOverflow, mailing lists etc).  | By MathWorks
+| **Documentation** | OK and growing, inline/online | OK, inline/online
+
+> Note$^1$: **JuliaPro** offer paid licenses, if professional support is needed.
+
+---
+
+# How to install Julia :arrow_down: (1/2)
+- You can try online *for free* on [JuliaBox.com](https://www.juliabox.com/)
+
+- On Linux, Mac OS or Windows:
+  + You can use the default installer :package:
+    from the website [julialang.org/downloads](https://julialang.org/downloads/)
+- Takes about 4 minutes... and it's free !
+
+> You also need Python 3 to use Jupyter :sparkles:, I suggest to use
+> [Anaconda.com/download](https://www.anaconda.com/download/) if you don't have Python yet.
+
+---
+
+# How to install Julia :arrow_down: (2/2)
+
+![download_julia.png 40%](figures/download_julia.png)
+
+1. Select the binary of your platform :package:
+2. Run the binary :running: !
+3. Wait :clock130:…
+4. Done :ok_hand: ! Test with `julia` in a terminal
+
+---
+
+# Different tools to use Julia
+- Use `julia` for the command line for short experiments
+  ![50%](figures/screenshot_julia_repl.png)
+- Use the *Juno* IDE to edit large projects
+
+> Demo time :watch: !
+
+---
+
+# Different tools to use Julia
+- Use **Ju***pyter* notebooks to write or share your experiments
+  (examples: [`github.com/Naereen/notebooks`](https://github.com/Naereen/notebooks/))
+  ![40%](figures/screenshot_julia_jupyter.png)
+
+> Demo time :watch: !
+
+---
+
+## :package: How to install modules in Julia ?
+- Installing is **easy** !
+```julia
+julia> Pkd.add("IJulia")  # installs IJulia
+```
+
+- Updating also!
+```julia
+julia> Pkg.update()
+```
+
+## :mag: How to find the module you need ?
+- First… ask your colleagues :smile: !
+- Complete list on [pkg.JuliaLang.org](https://pkg.julialang.org)
+
+---
+
+# :package: Overview of famous Julia modules
+
+- [`Winston.jl`](https://github.com/JuliaGraphics/Winston.jl) for easy plotting like MATLAB
+- The [JuliaDiffEq](http://juliadiffeq.org) collection for **differential equations**
+- The [JuliaOpt](https://www.juliaopt.org/) collection for **optimization**
+- The [JuliaStats](http://juliastats.github.io) collection for **statistics**
+- And many more!
+
+> Find more specific packages on [GitHub.com/svaksha/Julia.jl/](https://github.com/svaksha/Julia.jl/)
+
+---
+
+# Many packages, and a quickly growing community
+
+[![bg original 50%](figures/pulse_julia_allver.png)](https://pkg.julialang.org/pulse.html)
+
+> Julia is still in development, in version v0.6 but version 1.0 is planned soon!
+
+---
+
+# 2. Main differences in syntax between Julia and MATLAB
+> Ref: [cheatsheets.quantecon.org](https://cheatsheets.quantecon.org/)
+
+|  | Julia | MATLAB
+|:-|:-:|:-:|
+| **File ext.** | `.jl` | `.m`
+| **Comment** | `# blabla...` | `% blabla...`
+| **Indexing** | `a[1]` to `a[end]` | `a(1)` to `a(end)`
+| **Slicing** | `a[1:100]` (view) | `a(1:100)` (:warning: copy)
+| **Operations** | Linear algebra by default | Linear algebra by default
+| **Block** | Use `end` to close all blocks | Use `endif` `endfor` etc
+
+---
+
+|  | Julia | MATLAB
+|:-|:-:|:-:|
+| **Help** | `?func` | `help func`
+| **And** | `a & b` | `a && b`
+| **Or** | `a | b` | `a || b`
+| **Datatype** | `Array` of *any* type | multi-dim doubles array
+| **Array** | `[1 2; 3 4]` | `[1 2; 3 4]`
+| **Size** | `size(a)` | `size(a)`
+| **Nb Dim** | `ndims(a)` | `ndims(a)`
+| **Last** | `a[end]` | `a(end)`
+
+---
+
+|  | Julia | MATLAB
+|:-|:-:|:-:|
+| **Tranpose** | `a.'` | `a.'`
+| **Conj. transpose** | `a'` | `a'`
+| **Matrix** x | `a * b` | `a * b`
+| **Element-wise** x | `a .* b` | `a .* b`
+| **Element-wise** / | `a ./ b` | `a ./ b`
+| **Element-wise** ^ | `a ^ 3` | `a .^ 3`
+| **Zeros** | `zeros(2, 3, 5)` | `zeros(2, 3, 5)`
+| **Ones** | `ones(2, 3, 5)` | `ones(2, 3, 5)`
+| **Identity** | `eye(10)` | `eye(10)`
+| **Range** | `range(0, 100, 2)` or `1:2:100` | `1:2:100`
+
+---
+
+|  | Julia | MATLAB
+|:-|:-:|:-:|
+| **Maximum** | `max(a)` | `max(max(a))` ?
+| **Random matrix** | `rand(3, 4)` | `rand(3, 4)`
+| L2 **Norm** | `norm(v)` | `norm(v)`
+| **Inverse** | `inv(a)` | `inv(a)`
+| **Solve syst.** | `a \ b` | `a \ b`
+| **Eigen vals** | `V, D = eig(a)` | `[V,D]=eig(a)`
+| **FFT/IFFT** | `fft(a)`, `ifft(a)` | `fft(a)`,`ifft(a)`
+
+> Very close to MATLAB for linear algebra!
+
+---
+
+# 3. Scientific problems solved with Julia
+> Just to give examples of syntax and modules
+
+1. 1D numerical integration and plot
+2. Solving a $2^{\text{nd}}$ order Ordinary Differential Equation
+
+---
+
+# 3.1. 1D numerical integration and plot
+
+> Exercise : evaluate and plot this function on [-1, 1] :
+> $$\mathrm{Ei}(x) := \int_{-x}^{\infty} \frac{\mathrm{e}^u}{u} \;\mathrm{d}u$$
+
+## How to?
+Use packages and everything is easy!
+
+- [`QuadGK.jl`](https://github.com/JuliaMath/QuadGK.jl) for integration
+- [`Winston.jl`](https://github.com/JuliaGraphics/Winston.jl) for 2D plotting
+
+---
+
+```julia
+using QuadGK
+
+function Ei(x, minfloat=1e-3, maxfloat=100)
+    f = t -> exp(-t) / t  # inline function, with '- >'
+    if x > 0
+        return quadgk(f, -x, -minfloat)[1]
+             + quadgk(f, minfloat, maxfloat)[1]
+    else
+        return quadgk(f, -x, maxfloat)[1]
+    end
+end
+
+X = linspace(-1, 1, 1000)   # 1000 points
+Y = [ Ei(x) for x in X ]
+
+using Winston
+plot(X, Y)
+title("The function Ei(x)")
+xlabel("x"); ylabel("y")
+savefig("figures/Ei_integral.png")
+```
+
+---
+
+![bg original 65%](figures/Ei_integral.png)
+
+---
+
+# 3.2. Solving a $2^{\text{nd}}$ order ODE
+
+> Goal : solve and plot the differential equation of a pendulum:
+> $$\theta''(t) + b \,\theta'(t) + c \,\sin(\theta(t)) = 0$$
+> For $b = 1/4$, $c = 5$, $\theta(0) = \pi - 0.1$, $\theta'(0)=0$, $t\in[0,10]$
+
+## How to?
+Use packages!
+
+- [`DifferentialEquations.jl`](https://github.com/JuliaDiffEq/DifferentialEquations.jl) function for ODE integration
+- [`Winston.jl`](https://github.com/JuliaGraphics/Winston.jl) for 2D plotting
+
+---
+
+```julia
+using DifferentialEquations
+
+b, c = 0.25, 5.0
+
+# macro magic!
+pend2 = @ode_def Pendulum begin
+  dθ = ω  # <-- yes, this is UTF8
+  dω = (-b * ω) - (c * sin(θ))
+end
+
+prob = ODEProblem(pend, y0, (0.0, 10.0))
+sol = solve(prob)         # ↑ solve on interval [0,10]
+t, y = sol.t, hcat(sol.u...)'
+
+using Winston
+plot(t, y[:, 1], t, y[:, 2])
+title("2D Differential Equation")
+savefig("figures/Pendulum_solution.png")
+```
+
+---
+
+![bg original 70%](figures/Pendulum_solution.png)
+
+---
+
+# Conclusion (1/2)
+
+## Sum-up
+- I hope you got a good introduction to Julia
+- It's not hard to migrate from MATLAB to Julia
+- Good start:
+  [`docs.JuliaLang.org/en/stable/manual/getting-started`](https://docs.julialang.org/en/stable/manual/getting-started/)
+
+
+---
+
+# Conclusion (2/2)
+
+> *Thanks for joining :clap: !*
+
+## Your mission, if you accept it... :boom:
+1. :baby: *Padawan level:* Train yourself a little bit on Julia
+   $\hookrightarrow$ [JuliaBox.com](https://www.juliabox.com/) ? Or install it on your laptop!
+   And ead [introduction in the Julia manual](https://docs.julialang.org/en/stable/manual/introduction/)!
+2. :woman_student: *Jedi level:* Try to solve a numerical system, from your research or teaching, **in Julia instead of MATLAB**
+3. :crossed_swords: *Master level:* From now on, try to use open-source & free tools for your research (Julia, Python and others)… :money_mouth_face:
