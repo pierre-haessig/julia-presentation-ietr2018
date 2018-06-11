@@ -1,0 +1,22 @@
+# Jupyter
+.ipynb_checkpoints/
+
+# Backup
+*~
+
+# Python
+*.py[co]
+
+# LaTeX files
+*.pdf
+*.gz
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.nav
+*.out
+*.snm
+*.toc
+*.vrb
+*busy*
