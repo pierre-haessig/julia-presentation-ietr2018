@@ -353,23 +353,146 @@ savefig("figures/Pendulum_solution.png")
 
 ---
 
-# Iterative computation
+<!-- *template: break -->
+
+# Ex. 1: Iterative computation
+
+Objective: 
+
+* show the efficiency of Julia's Just-in-Time (JIT) compilation
+* but also its fragility...
+
+---
+
+# Iterative computation: signal filtering
 
 The classical saying: 
 
-> *“Vectorized code often runs much faster than the corresponding code containing loops.”* ([MATLAB doc](https://mathworks.com/help/matlab/matlab_prog/vectorization.html))
+> *“Vectorized code often runs much faster than the corresponding code containing loops.”* (cf. [MATLAB doc](https://mathworks.com/help/matlab/matlab_prog/vectorization.html))
 
 does not hold for Julia, because of  its **just-in-time compiler**.
 
-Example for the smoothing of a signal $\{u_k\}_{k\in\mathbb{N}}$:
+## Example of a computation that cannot be vectorized
+Smoothing of a signal $\{u_k\}_{k\in\mathbb{N}}$:
 
 $$ y_k = ay_{k-1} + (1-a) u_k, \;\;\;\; k\in\mathbb{N}^+ $$
 
 
-Parameter $a$ tunes the smoothing, between none ($a=0$) and strong smoothing ($a\to1^-$).
+Parameter $a$ tunes the smoothing (none: $a=0$, strong $a\to1^-$).
+
+==Iteration (`for` loop) cannot be avoided.==
 
 <!-- NB : Matlab also has JIT https://fr.mathworks.com/products/matlab/matlab-execution-engine.html but it may not work well in all cases -->
 
+---
+
+# Signal filtering in Julia
+
+```julia
+function smooth(u, a)
+    y = zeros(u)
+    
+    y[1] = (1-a)*u[1]
+    for k=2:length(u)
+        y[k] = a*y[k-1] + (1-a)*u[k]
+    end
+    
+    return y
+end
+```
+
+<center><img src="figures/signal_filtering.png" width="50%"><center>
+
+---
+
+# Performance of the signal filter
+
+| Implementation        | Time for 10 Mpts | notes |
+|-----------------------|------------------|-------|
+| Julia                 | 50-70 ms         |       |
+| Python native         | 4400 ms          |       |
+| SciPy's `lfilter`     | 70 ms            | many lines of C |
+| Python + `@numba.jit` | 50 ms            | since 2012      |
+
+
+```python
+@numba.jit # ← factor x100 speed-up!
+def smooth_jit(u, a):
+    y = np.zeros_like(u)
+    
+    y[0] = (1-a)*u[0]
+    for k in range(1,len(u)):
+        y[k] = a*y[k-1] + (1-a)*u[k]
+    return y
+```
+---
+# Conclusion on the performance
+
+For this simple iterative computation:
+
+* Julia performs very well, much better than native Python
+* but it's possible to get the same with fresh Python tools ([Numba](http://numba.pydata.org/))
+* more realistic example needed
+
+
+---
+# Fragility of Julia's JIT Compilation
+
+The efficiency of the compiled code relies on **type inference**.
+
+```julia
+function smooth1(u, a)
+    y = 0
+    for k=1:length(u)
+        y = a*y + (1-a)*u[k]
+    end
+    return y
+end
+```
+```julia
+function smooth2(u, a)
+    y = 0.
+    for k=1:length(u)
+        y = a*y + (1-a)*u[k]
+    end
+    return y
+end
+```
+
+---
+
+# An order of magnitude difference
+
+```julia
+julia> @time smooth1(u, 0.9);
+  0.212018 seconds (30.00 M allocations: 457.764 MiB ...)
+```
+```julia
+julia> @time smooth2(u, 0.9);
+  0.024883 seconds (5 allocations: 176 bytes)
+```
+
+## Fortunately, Julia gives a good diagnosis tool
+
+```julia
+julia> @code_warntype smooth1(u, 0.9);
+...
+y::Union{Float64, Int64}
+...
+```
+`y` is either `Float64` or `Int64` when it should be just `Float64`.
+
+Cause: initialization `y=0` vs. `y=0.`!
+
+---
+
+<!-- *template: break -->
+
+# Ex. 2: Optimization in Julia
+
+Objective: demonstrate **JuMP**, a Modeling Language for Optimization in Julia.
+
+*Some research groups migrate to Julia just for this package!*
 
 ---
 
@@ -383,7 +506,7 @@ Example problem: Identifying the sea clutter in Weather Radar data.
 <span class="detail">
 An “IETR-colored” example, inspired by:
 
-* Radar data: P.-J. Trombe *et al.*, “Weather radars – the new eyes for offshore wind farms?,” *Wind Energy*, 2014.
+* Radar data+photo: P.-J. Trombe *et al.*, “Weather radars – the new eyes for offshore wind farms?,” *Wind Energy*, 2014.
 * Regression methods: S. Boyd and L. Vandenberghe, Convex Optimization. Cambridge University Press, 2004. (Example 6.2)
 </span>
 
@@ -434,20 +557,22 @@ The choice of the loss function influences:
 
 # How to solve the regression problem
 
-## Option 1: specific tools
+## Option 1: a big bag of tools
 
-a specific tool for each type of regression:
+a specific package for each type of regression:
 * “least square toolbox” (→ [MultivariateStats.jl](https://github.com/JuliaStats/MultivariateStats.jl))
 * “least absolute value toolbox” (→ [quantile regression](https://github.com/pkofod/QuantileRegression.jl/))
 * “Huber toolbox” (i.e. robust regression → ???)
 * ...
 
-## Option 2: a generic tool
+<img src="figures/Unico_Anello.png" style="float:right;width:20%;">
+
+## Option 2: the “One Tool”
 
 
 → a **Modeling Language for Optimization**
 
-+more freedom to explore variants of the problem
++more **freedom to explore variants** of the problem
 
 ---
 <!-- *template: break -->
@@ -457,7 +582,7 @@ a specific tool for each type of regression:
 *Purpose: make it easy to **specify** and **solve** optimization problems without expert knowledge*.
 
 ---
-  
+<!--
 # <span style="font-size:0.8em;">Tasks for solving a practical optimization problem </span>
 
 <img src="figures/opt_workflow_4e4.png" style="position:relative;left:-2em;width:110%;" >
@@ -474,15 +599,15 @@ a specific tool for each type of regression:
 
 <img src="figures/opt_workflow_with_modlay.png" style="position:relative;left:-2em;width:110%;" >
 
+-->
 
----
 # JuMP: optimization modeling in Julia
 
 The [JuMP](https://github.com/JuliaOpt/JuMP.jl) package offers a domain-specific modeling language for mathematical optimization.
 
 
 
-JuMP interfaces to many optimization solvers: open-source (Ipopt, GLPK, Clp, ECOS...) and commercial (CPLEX, Gurobi, MOSEK...).
+JuMP **interfaces with many optimization solvers**: open-source (Ipopt, GLPK, Clp, ECOS...) and commercial (CPLEX, Gurobi, MOSEK...).
 
 Other Modeling Languages for Optimization:
 
@@ -495,9 +620,9 @@ Other Modeling Languages for Optimization:
 
 --- 
 
-# Regression with JuMP
+# Regression with JuMP — common part
 
-Given `x` and `y` the 300 data points, common part:
+Given `x` and `y` the 300 data points:
 
 ```julia
 m = Model(solver = ECOSSolver())
@@ -510,7 +635,7 @@ res = a*x .- y +b
 
 `res` (“residuals”) is an Array of 300 elements of type `JuMP.GenericAffExpr{Float64,JuMP.Variable}`, i.e. a semi-symbolic affine expression.
 
-Now, we need to specify the penalty on those residuals
+Now, we need to specify the penalty on those residuals.
 
 ---
 
@@ -564,4 +689,22 @@ julia> solve(m)
 (-1.094, 127.52) # for least squares
 ```
 
-<img src="figures/radar_fit_cmp.png" width="55%">
+<img src="figures/radar_fit_cmp.png" style="float:right;width:55%;">
+
+Observations:
+* least abs. val., Huber: OK
+* least squares: NOT OK
+
+---
+# JuMP: summary
+
+A modeling language for optimization, withing Julia:
+* gives access to all classical optimization solvers 
+* very fast (claim)
+* gives freedom to explore many variations of an optimization problem (fast prototyping)
+
+More on optimization with Julia: 
+
+* [JuliaOpt](http://www.juliaopt.org/): host organization of JuMP
+* [Optim.jl](http://julianlsolvers.github.io/Optim.jl/stable/):  implementation of classics in Julia (e.g. Nelder-Mead)
+* [JuliaDiff](http://www.juliadiff.org/): Automatic Differentiation to compute gradients, thanks to Julia's strong capability for code introspection
