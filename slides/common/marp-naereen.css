@@ -13,7 +13,7 @@
 
 .slide code, .slide pre {
     /* Use the Fira Code font for code */
-    font-family: "Fira Code", "DejaVu Sans Mono", "Ubuntu Mono", "DejaVu Sans Mono Book", "Courier New", Courier, monospace;
+    font-family: "DejaVu Sans Mono", "Ubuntu Mono", "DejaVu Sans Mono Book", "Courier New", Courier, monospace;
 }
 
 /* Enable all text ligatures in all the slides *//*
@@ -51,8 +51,8 @@ https://github.com/yhatt/marp/blob/master/sass/themes/_slide.sass
 https://developer.mozilla.org/fr/docs/Web/CSS/flex-direction
 https://developer.mozilla.org/fr/docs/Web/CSS/justify-content
 
-slide_wrapper  > .slide 
-    justify-content: flex-start 
+slide_wrapper  > .slide
+    justify-content: flex-start
 */
 
 .slide_inner {
@@ -88,7 +88,7 @@ slide_wrapper  > .slide
     text-align: right;
     display: block;
     margin-left: auto;
-    margin-right: 0;
+    margin-right: 10%;
 }
 
 .slide .detail {
@@ -96,12 +96,12 @@ slide_wrapper  > .slide
     font-size: 0.9em;
 }
 
+/* -------------------------------------------------------- */
 /* The "break" slide template:
 
-* inverted color
-* bigger fonts
-* vertically centered content
-
+- inverted color
+    - bigger fonts
+    - vertically centered content
 */
 
 .slide_wrapper[data-template~="break"] > .slide {
