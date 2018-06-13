@@ -7,6 +7,10 @@ footer: « Julia, my new computing friend? » | 14 June 2018, IETR@Vannes | By: 
 
 <link rel="stylesheet" type="text/css" href="common/marp-naereen.css" />
 
+<img src="figures/ET_Julia.png" style="position:relative;left:-1.5em;width:100%;">
+
+---
+
 # « Julia, my new friend for computing and optimization? »
 
 - **Intro to the Julia programming language, for MATLAB users**
@@ -16,7 +20,7 @@ footer: « Julia, my new computing friend? » | 14 June 2018, IETR@Vannes | By: 
 - *Who:* Lilian Besson & Pierre Haessig
    (SCEE & AUT team @ IETR / CentraleSupélec campus Rennes)
 
-<center><img src="figures/julia_logo.png" width="40%"></center>
+<center><img src="figures/julia_logo.png" width="35%"></center>
 
 ---
 
