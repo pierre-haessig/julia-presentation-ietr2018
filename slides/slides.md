@@ -16,7 +16,7 @@ footer: « Julia, my new computing friend? » | 14 June 2018, IETR@Vannes | By: 
 - *Who:* Lilian Besson & Pierre Haessig
    (SCEE & AUT team @ IETR / CentraleSupélec campus Rennes)
 
-<center><img src="figures/julia_logo.png" width="40%"</center>
+<center><img src="figures/julia_logo.png" width="40%"></center>
 
 ---
 
@@ -148,7 +148,9 @@ julia> Pkg.update()
 
 # :package: Overview of famous Julia modules
 
-- [`Winston.jl`](https://github.com/JuliaGraphics/Winston.jl) for easy plotting like MATLAB
+- Plotting: 
+  - [`Winston.jl`](https://github.com/JuliaGraphics/Winston.jl) for easy plotting like MATLAB
+  - [`PyPlot`](https://github.com/JuliaPy/PyPlot.jl): interface to Matplotlib (Python)
 - The [JuliaDiffEq](http://juliadiffeq.org) collection for **differential equations**
 - The [JuliaOpt](https://www.juliaopt.org/) collection for **optimization**
 - The [JuliaStats](http://juliastats.github.io) collection for **statistics**
@@ -334,3 +336,228 @@ savefig("figures/Pendulum_solution.png")
    And ead [introduction in the Julia manual](https://docs.julialang.org/en/stable/manual/introduction/)!
 2. :woman_student: *Jedi level:* Try to solve a numerical system, from your research or teaching, **in Julia instead of MATLAB**
 3. :crossed_swords: *Master level:* From now on, try to use open-source & free tools for your research (Julia, Python and others)… :money_mouth_face:
+
+
+---
+<!-- *template: break -->
+
+# Examples
+
+
+1. **Iterative computation**: signal filtering
+2. **Optimization**: robust regression on RADAR data
+
+---
+
+# Iterative computation
+
+The classical saying: 
+
+> *“Vectorized code often runs much faster than the corresponding code containing loops.”* ([MATLAB doc](https://mathworks.com/help/matlab/matlab_prog/vectorization.html))
+
+does not hold for Julia, because of  its **just-in-time compiler**.
+
+Example for the smoothing of a signal $\{u_k\}_{k\in\mathbb{N}}$:
+
+$$ y_k = ay_{k-1} + (1-a) u_k, \;\;\;\; k\in\mathbb{N}^+ $$
+
+
+Parameter $a$ tunes the smoothing, between none ($a=0$) and strong smoothing ($a\to1^-$).
+
+<!-- NB : Matlab also has JIT https://fr.mathworks.com/products/matlab/matlab-execution-engine.html but it may not work well in all cases -->
+
+
+---
+
+# Optimization problem
+
+Example problem: Identifying the sea clutter in Weather Radar data.
+
+* is a **robust regression** problem
+    * is an optimization problem
+
+<span class="detail">
+An “IETR-colored” example, inspired by:
+
+* Radar data: P.-J. Trombe *et al.*, “Weather radars – the new eyes for offshore wind farms?,” *Wind Energy*, 2014.
+* Regression methods: S. Boyd and L. Vandenberghe, Convex Optimization. Cambridge University Press, 2004. (Example 6.2)
+</span>
+
+---
+# Weather radar: the problem of sea clutter
+
+
+<center><img src="./figures/radar_illustration.png" width="90%">
+</center>
+
+Given $n$ data points $(x_i, y_i)$, fit a linear trend:
+
+$$\hat{y} = a.x + b$$
+
+An optimization problem with two parameters: $a$ (slope), $b$ (intercept)
+
+---
+# Regression as an optimization problem
+
+The parameters for the trend $(a,b)$ should minimize a criterion $J$ which penalizes the residuals $r_i = y_i - \hat{y} = y_i - a.x + b$:
+
+$$ J(a,b) = \sum_i \phi(r_i)$$
+
+where $\phi$ is the *penaly function*, to be chosen:
+
+* $\phi(r) = r^2$: quadratic deviation → least squares regression
+* $\phi(r) = \lvert r \rvert$: absolute value deviation
+* $\phi(r) = h(r)$: [Huber loss](https://en.wikipedia.org/wiki/Huber_loss)
+* ...
+
+---
+# Choice of penalty function
+The choice of the loss function influences:
+
+* the optimization result (fit quality)
+    * e.g. in the presence of outliers
+* the properties of optimization problem: convexity, smoothness
+
+### Properties of each function
+
+<img src="./figures/loss_func.png" width="45%" style="float:right; margin-left:0em;">
+
+* quadratic: convex, smooth, heavy weight for strong deviations
+* absolute value: convex, not smooth
+* Huber: a mix of the two
+
+---
+
+# How to solve the regression problem
+
+## Option 1: specific tools
+
+a specific tool for each type of regression:
+* “least square toolbox” (→ [MultivariateStats.jl](https://github.com/JuliaStats/MultivariateStats.jl))
+* “least absolute value toolbox” (→ [quantile regression](https://github.com/pkofod/QuantileRegression.jl/))
+* “Huber toolbox” (i.e. robust regression → ???)
+* ...
+
+## Option 2: a generic tool
+
+
+→ a **Modeling Language for Optimization**
+
++more freedom to explore variants of the problem
+
+---
+<!-- *template: break -->
+
+# Modeling Languages for Optimization
+
+*Purpose: make it easy to **specify** and **solve** optimization problems without expert knowledge*.
+
+---
+  
+# <span style="font-size:0.8em;">Tasks for solving a practical optimization problem </span>
+
+<img src="figures/opt_workflow_4e4.png" style="position:relative;left:-2em;width:110%;" >
+
+---
+  
+# <span style="font-size:0.8em;">Tasks for solving a practical optimization problem </span>
+
+<img src="figures/opt_workflow_without_modlay.png" style="position:relative;left:-2em;width:110%;" >
+
+---
+  
+# <span style="font-size:0.8em;">Tasks for solving a practical optimization problem </span>
+
+<img src="figures/opt_workflow_with_modlay.png" style="position:relative;left:-2em;width:110%;" >
+
+
+---
+# JuMP: optimization modeling in Julia
+
+The [JuMP](https://github.com/JuliaOpt/JuMP.jl) package offers a domain-specific modeling language for mathematical optimization.
+
+
+
+JuMP interfaces to many optimization solvers: open-source (Ipopt, GLPK, Clp, ECOS...) and commercial (CPLEX, Gurobi, MOSEK...).
+
+Other Modeling Languages for Optimization:
+
+* Standalone software: AMPL, GAMS
+* Matlab: YALMIP ([previous seminar](http://pierreh.eu/efficient-tools-seminar/)), CVX
+* Python: Pyomo, PuLP, CVXPy
+
+
+> Claim: JuMP is **fast**, thanks to Julia's [metaprogramming](https://docs.julialang.org/en/stable/manual/metaprogramming/#Metaprogramming-1) capabilities (generation of Julia code within Julia code).
+
+--- 
+
+# Regression with JuMP
+
+Given `x` and `y` the 300 data points, common part:
+
+```julia
+m = Model(solver = ECOSSolver())
+
+@variable(m, a)
+@variable(m, b)
+
+res = a*x .- y +b
+```
+
+`res` (“residuals”) is an Array of 300 elements of type `JuMP.GenericAffExpr{Float64,JuMP.Variable}`, i.e. a semi-symbolic affine expression.
+
+Now, we need to specify the penalty on those residuals
+
+---
+
+# Regression choice: least squares
+
+
+$$\min \sum_i r_i^2$$
+
+reformulated as a [Second-Order Cone Program](https://en.wikipedia.org/wiki/Second-order_cone_programming) (SOCP):
+
+
+$$\min j, \quad \text{such that} \; \lVert r \rVert_2 \leq j$$
+
+
+```julia
+@variable(m, j)
+@constraint(m, norm(res) <= j);
+@objective(m, Min, j)
+```
+(SOCP → [ECOS](https://github.com/embotech/ecos) solver)
+
+---
+
+# Regression choice: least absolute deviation
+
+$$\min \sum_i \lvert r_i \rvert $$
+
+reformulated as a [Linear Program](https://en.wikipedia.org/wiki/Linear_programming) (LP)
+
+$$\min \sum_i t_i, \quad \text{such that} \; -t_i \leq r_i \leq t_i$$
+
+```julia
+@variable(m, t[1:n] )
+@constraint(m, res .<= t)
+@constraint(m, res .>= -t)
+@objective(m, Min, sum(t));
+```
+
+--- 
+# Solve! :gear:<
+
+
+```julia
+julia> solve(m)
+[solver blabla... ⏳ ]
+:Optimal # hopefully
+```
+
+```julia
+> getvalue(a), getvalue(b)
+(-1.094, 127.52) # for least squares
+```
+
+<img src="figures/radar_fit_cmp.png" width="55%">

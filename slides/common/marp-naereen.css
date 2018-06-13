@@ -2,7 +2,7 @@
 
 - Ref: https://github.com/yhatt/marp/#customizing-slide-css
 - Marp: https://github.com/yhatt/marp
-- Author: Lilian Besson (Naereen) https://github.com/Naereen/
+- Author: Lilian Besson (Naereen) https://github.com/Naereen/, expanded by Pierre Haessig
 - License: MIT (https://lbesson.mit-license.org/)
 */
 
@@ -16,13 +16,13 @@
     font-family: "Fira Code", "DejaVu Sans Mono", "Ubuntu Mono", "DejaVu Sans Mono Book", "Courier New", Courier, monospace;
 }
 
-/* Enable all text ligatures in all the slides */
+/* Enable all text ligatures in all the slides *//*
 .slide {
     -webkit-font-feature-settings: "liga" on, "hlig" on, "hist" on, "dlig" on, "zero" on, "calt" on, "swsh" on, "kern" on, "locl" on !important;
     -moz-font-feature-settings: "liga" on, "hlig" on, "hist" on, "dlig" on, "zero" on, "calt" on, "swsh" on, "kern" on, "locl" on !important;
     -ms-font-feature-settings: "liga" on, "hlig" on, "hist" on, "dlig" on, "zero" on, "calt" on, "swsh" on, "kern" on, "locl" on !important;
     font-feature-settings: "liga" on, "hlig" on, "hist" on, "dlig" on, "zero" on, "calt" on, "swsh" on, "kern" on, "locl" on !important;
-}
+}*/
 
 /* See https://stackoverflow.com/questions/3912694/using-markdown-how-do-i-center-an-image-and-its-caption */
 .slide img[src*="#center"] {
@@ -41,14 +41,20 @@
     margin-right: auto;
 }
 
-/* Justify paragraph? It was ugly in some tables... */
-/* .slide_inner p {
-    text-align: justify;
-    text-align-last: left;
-    text-justify: inter-word;
-} */
-
 /* Try to align the slide to the top of the page */
+
+/*TODO: try instead
+
+cf.
+
+https://github.com/yhatt/marp/blob/master/sass/themes/_slide.sass
+https://developer.mozilla.org/fr/docs/Web/CSS/flex-direction
+https://developer.mozilla.org/fr/docs/Web/CSS/justify-content
+
+slide_wrapper  > .slide 
+    justify-content: flex-start 
+*/
+
 .slide_inner {
     position: absolute !important;
     top: 8% !important;
@@ -83,4 +89,43 @@
     display: block;
     margin-left: auto;
     margin-right: 0;
+}
+
+.slide .detail {
+    color: #777;
+    font-size: 0.9em;
+}
+
+/* The "break" slide template:
+
+* inverted color
+* bigger fonts
+* vertically centered content
+
+*/
+
+.slide_wrapper[data-template~="break"] > .slide {
+    justify-content: center;
+    background-color: #246;
+    color: white;
+    font-size:1.2em;
+}
+
+.slide_wrapper[data-template~="break"] > .slide > .slide_inner {
+    position: relative !important;
+    top:unset !important;
+}
+
+.slide_wrapper[data-template~="break"] > .slide h1 {
+    color: white;
+    text-align: center;
+    font-size: 2em;
+}
+
+.slide_wrapper[data-template~="break"] .slide_footer {
+    color: white;
+}
+
+body.slide-view .slide_wrapper[data-template~="break"][data-page_number="true"] .slide_page {
+    color: white;
 }
