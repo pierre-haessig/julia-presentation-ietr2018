@@ -51,8 +51,11 @@ https://github.com/yhatt/marp/blob/master/sass/themes/_slide.sass
 https://developer.mozilla.org/fr/docs/Web/CSS/flex-direction
 https://developer.mozilla.org/fr/docs/Web/CSS/justify-content
 
-slide_wrapper  > .slide
-    justify-content: flex-start
+
+.slide_wrapper > .slide {
+    justify-content: flex-start;
+    padding: 0px;
+}
 */
 
 .slide_inner {
