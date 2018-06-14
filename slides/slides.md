@@ -38,16 +38,17 @@ footer: « Julia, my new computing friend? » | 14 June 2018, IETR@Vannes | By: 
 
 # 1. What is Julia ?
 
-- Developed and popular from the [last 7 years](https://julialang.org/blog/2012/02/why-we-created-julia)
-- Open-source and free programming language (MIT license)
-- Interpreted *and* compiled, very efficient
-- But easy syntax, dynamic typing, inline documentation etc
-- Multi-platform (Windows, Mac OS X, GNU/Linux etc)
-- MATLAB-like imperative style
-- MATLAB-like syntax for linear algebra etc
-- Designed to be *simple to learn and use*
-- Easy to run your code in parallel (multi-core & cluster)
-- Used worldwide: research, data science, finance etc…
+- **Open-source and free programming language** (MIT license)
+	- Developed since [2012](https://julialang.org/blog/2012/02/why-we-created-julia) (creators: MIT researchers)
+	- Growing popularity worldwide, in research, data science, finance etc…
+	- Multi-platform: Windows, Mac OS X, GNU/Linux...
+- Designed for *performance*:
+	- Interpreted *and* compiled, very efficient
+	- Easy to run your code in parallel (multi-core & cluster)
+
+- Designed to be *simple to learn and use*:
+	- Easy syntax, dynamic typing (MATLAB & Python-like)
+<!--	- Inline documentation -->
 
 ---
 
@@ -61,7 +62,7 @@ footer: « Julia, my new computing friend? » | 14 June 2018, IETR@Vannes | By: 
 
 ---
 
-# Comparison with MATLAB
+# Comparison with MATLAB (1/3)
 
 |  | Julia :smiley: | MATLAB :cry:
 |:-|:-:|:-:|
@@ -73,7 +74,7 @@ footer: « Julia, my new computing friend? » | 14 June 2018, IETR@Vannes | By: 
 
 ---
 
-# Comparison with MATLAB
+# Comparison with MATLAB (2/3)
 
 |  | Julia | MATLAB
 |:-|:-:|:-:|
@@ -83,7 +84,7 @@ footer: « Julia, my new computing friend? » | 14 June 2018, IETR@Vannes | By: 
 
 ---
 
-# Comparison with MATLAB
+# Comparison with MATLAB (3/3)
 
 |  | Julia | MATLAB
 |:-|:-:|:-:|
@@ -92,7 +93,7 @@ footer: « Julia, my new computing friend? » | 14 June 2018, IETR@Vannes | By: 
 | **Support?** | Community$^1$ (StackOverflow, mailing lists etc).  | By MathWorks
 | **Documentation** | OK and growing, inline/online | OK, inline/online
 
-> Note$^1$: **JuliaPro** offer paid licenses, if professional support is needed.
+> Note$^1$: [Julia Computing, Inc.](https://juliacomputing.com/) (founded 2015 by Julia creators) offer paid licenses ([JuliaPro](https://juliacomputing.com/products/juliapro.html) Enterprise) with professional support.
 
 ---
 
@@ -729,7 +730,7 @@ A modeling language for optimization, *within Julia*:
 
 ---
 
-# Conclusion (1/2)
+# Conclusion (2/2)
 
 > *Thanks for joining :clap: !*
  
