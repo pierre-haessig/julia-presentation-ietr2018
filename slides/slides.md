@@ -26,12 +26,12 @@ footer: « Julia, my new computing friend? » | 14 June 2018, IETR@Vannes | By: 
 
 <!-- *template: break -->
 
-# Agenda for today [25 min]
+# Agenda for today [30 min]
 
-1. What is Julia [4 min]
-2. Comparison with MATLAB [4 min]
-3. Examples of problems solved Julia [5 min]
-4. Longer example on optimization with JuMP [10min]
+1. What is Julia? [5 min]
+2. Comparison with MATLAB [5 min]
+3. Two examples of problems solved Julia [5 min]
+4. Longer ex. on optimization with JuMP [13min]
 5. Links for more information ?  [2 min]
 
 ---
@@ -89,7 +89,7 @@ footer: « Julia, my new computing friend? » | 14 June 2018, IETR@Vannes | By: 
 |  | Julia | MATLAB
 |:-|:-:|:-:|
 | **Usage** | Generic, worldwide :earth_americas: | Research in academia and industry
-| **Fame** | Young but starts to be known | Old and known, in decline
+| **Fame** | Young but starts to be known | Old and known... In decline :chart_with_downwards_trend: ?
 | **Support?** | Community$^1$: StackOverflow, [Forum](https://discourse.julialang.org/)  | By MathWorks
 | **Documentation** | OK and growing, inline/online | OK, inline/online
 
