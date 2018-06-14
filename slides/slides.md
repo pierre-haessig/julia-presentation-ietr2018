@@ -90,7 +90,7 @@ footer: « Julia, my new computing friend? » | 14 June 2018, IETR@Vannes | By: 
 |:-|:-:|:-:|
 | **Usage** | Generic, worldwide :earth_americas: | Research in academia and industry
 | **Fame** | Young but starts to be known | Old and known, in decline
-| **Support?** | Community$^1$ (StackOverflow, mailing lists etc).  | By MathWorks
+| **Support?** | Community$^1$ (StackOverflow, [Forum](https://discourse.julialang.org/)).  | By MathWorks
 | **Documentation** | OK and growing, inline/online | OK, inline/online
 
 > Note$^1$: [Julia Computing, Inc.](https://juliacomputing.com/) (founded 2015 by Julia creators) offer paid licenses ([JuliaPro](https://juliacomputing.com/products/juliapro.html) Enterprise) with professional support.
@@ -351,6 +351,8 @@ Objective:
 * show the efficiency of Julia's Just-in-Time (JIT) compilation
 * but also its fragility...
 
+*Note: you can find companion notebooks on [GitHub](https://github.com/pierre-haessig/julia-presentation-ietr2018/tree/master/filter%20example)*
+
 ---
 
 # Iterative computation: signal filtering
@@ -486,13 +488,14 @@ Cause: initialization `y=0` vs. `y=0.0`!
 
 Objective: demonstrate **JuMP**, a Modeling Language for Optimization in Julia.
 
-*Some research groups migrate to Julia just for this package!*
+* Some researchers migrate to Julia just for this!
+* I use JuMP for **my research** (energy management)
 
-> Cf. [JuMP.ReadTheDocs.io](http://jump.readthedocs.io/) for documentation!
+*Note: you can find companion notebooks on [GitHub](https://github.com/pierre-haessig/julia-presentation-ietr2018/tree/master/regression%20example)*
 
 ---
 
-# Optimization problem
+# Optimization problem example
 
 Example problem: identifying the sea clutter in Weather Radar data.
 
@@ -500,12 +503,12 @@ Example problem: identifying the sea clutter in Weather Radar data.
     * $\hookrightarrow$ is an optimization problem!
 
 <br>
-<span class="detail">
+<div class="detail">
 An « IETR-colored » example, inspired by:
 
 * Radar data+photo: P.-J. Trombe *et al.*, « Weather radars – the new eyes for offshore wind farms?,» *Wind Energy*, 2014.
 * Regression methods: S. Boyd and L. Vandenberghe, *Convex Optimization*. Cambridge University Press, 2004. (Example 6.2).
-</span>
+</div>
 
 ---
 
