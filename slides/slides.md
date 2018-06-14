@@ -7,7 +7,7 @@ footer: « Julia, my new computing friend? » | 14 June 2018, IETR@Vannes | By: 
 
 <link rel="stylesheet" type="text/css" href="common/marp-naereen.css" />
 
-<img src="figures/ET_Julia.png" style="position:relative;left:-1.5em;width:100%;">
+![bg original 100%](figures/ET_Julia.png)
 
 ---
 
