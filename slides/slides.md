@@ -309,6 +309,7 @@ Use packages!
 using DifferentialEquations
 
 b, c = 0.25, 5.0
+y0 = [pi - 0.1, 0]
 
 # macro magic!
 pend2 = @ode_def Pendulum begin
@@ -740,7 +741,7 @@ A modeling language for optimization, *within Julia*:
 ## Your mission, if you accept it... :boom:
 1. :baby: *Padawan level:* Train yourself a little bit on Julia
    $\hookrightarrow$ [`JuliaBox.com`](https://www.juliabox.com/) ? Or install it on your laptop!
-   And ead [introduction in the Julia manual](https://docs.julialang.org/en/stable/manual/introduction/)!
+   And read [introduction in the Julia manual](https://docs.julialang.org/en/stable/manual/introduction/)!
 2. :woman_student: *Jedi level:* Try to solve a numerical system, from your research or teaching, **in Julia instead of MATLAB**
 3. :crossed_swords: *Master level:* From now on, try to use open-source & free tools for your research (Julia, Python and others)… :money_mouth_face:
 
