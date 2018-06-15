@@ -7,6 +7,8 @@ date: Thursday 14th of June, 2018
 lang: english
 ---
 
+**Note**: a PDF is available [here online](https://perso.crans.org/besson/publis/slides/2018_06__Julia_my_new_optimization_friend__introduction_for_MATLAB_users__at_IETR_seminar/slides.pdf).
+
 <img src="slides/figures/ET_Julia.png" style="position:relative;left:-1.5em;width:100%;">
 
 ---
