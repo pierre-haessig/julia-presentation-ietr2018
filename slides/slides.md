@@ -403,8 +403,9 @@ end
 
 | Implementation        | Time for $10 \,\mathrm{Mpts}$   | notes |
 |-----------------------|----------------------|-------|
-| Julia                 | $50-70\,\mathrm{ms}$ | **Fast! Easy!** :ok_hand:     |
-| Octave native         | $88000\,\mathrm{ms}$  | **slow!!** :snail: |
+| Julia  :sparkles:     | $50-70\,\mathrm{ms}$ | **Fast! Easy!** :ok_hand:     |
+| Octave native         | $88000\,\mathrm{ms}$  | **slow!!** :snail::snail::snail: |
+| SciLab native         | $7800\,\mathrm{ms}$  | **slow!!** :snail::snail: |
 | Python native         | $4400\,\mathrm{ms}$  | **slow!** :snail: |
 | SciPy's `lfilter`     | $70\,\mathrm{ms}$    | many lines of C |
 | Python + `@numba.jit` | $50\,\mathrm{ms}$    | since $2012$    |
