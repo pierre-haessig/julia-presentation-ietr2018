@@ -1,0 +1,36 @@
+9.3.0.713579 (R2017b)
+Timing of the smoothing filter in Matlab, for 10^7 pts
+1. iterative implementation
+Elapsed time is 0.163132 seconds.
+2. Matlab filter function
+Elapsed time is 0.369009 seconds.
+9.3.0.713579 (R2017b)
+Timing of the smoothing filter in Matlab, for 10^7 pts
+1. iterative implementation
+Elapsed time is 0.093749 seconds.
+2. Matlab filter function
+Elapsed time is 0.097540 seconds.
+9.3.0.713579 (R2017b)
+Timing of the smoothing filter in Matlab, for 10^7 pts
+1. iterative implementation
+Elapsed time is 0.108521 seconds.
+2. Matlab filter function
+Elapsed time is 0.099354 seconds.
+9.3.0.713579 (R2017b)
+Timing of the smoothing filter in Matlab, for 10^7 pts
+1. iterative implementation
+Elapsed time is 0.092593 seconds.
+2. Matlab filter function
+Elapsed time is 0.099805 seconds.
+9.3.0.713579 (R2017b)
+Timing of the smoothing filter in Matlab, for 10^7 pts
+1. iterative implementation
+Elapsed time is 0.091226 seconds.
+2. Matlab filter function
+Elapsed time is 0.102288 seconds.
+9.3.0.713579 (R2017b)
+Timing of the smoothing filter in Matlab, for 10^7 pts
+1. iterative implementation
+Elapsed time is 0.094123 seconds.
+2. Matlab filter function
+Elapsed time is 0.098846 seconds.
