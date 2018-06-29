@@ -1,0 +1,10 @@
+# Win 8 VM overhead
+
+Timing of the Python filtering notebook under my Windows 8 VM,
+compared to my Linux.
+
+* Native Python: 5.9 s instead of 4.4 s (+35%)
+* Scipy lfilter: 96 ms instead of 70 (+40%)
+* Python + numba: 60 ms instead of 50 (+20%)
+
+conclusion: +20 to +40 % overhead.
