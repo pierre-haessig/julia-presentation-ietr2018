@@ -401,24 +401,43 @@ end
 
 # Performance of the signal filter
 
-| Implementation        | Time for $10 \,\mathrm{Mpts}$   | notes |
-|-----------------------|----------------------|-------|
-| Julia  :sparkles:     | $50-70\,\mathrm{ms}$ | **Fast! Easy!** :ok_hand:     |
-| Octave native         | $88000\,\mathrm{ms}$  | **slow!!** :snail::snail::snail: |
-| SciLab native         | $7800\,\mathrm{ms}$  | **slow!!** :snail::snail: |
-| Python native         | $4400\,\mathrm{ms}$  | **slow!** :snail: |
-| SciPy's `lfilter`     | $70\,\mathrm{ms}$    | many lines of C |
-| Python + `@numba.jit` | $50\,\mathrm{ms}$    | since $2012$    |
+| Implementation        | Time for $10 \,\mathrm{Mpts}$ | Notes |
+|-----------------------|-----------------------|-------|
+| Julia  :sparkles:     | $50-70\,\mathrm{ms}$  | **Fast! Easy!** :ok_hand: |
+| Matlab 2017b*         | $90-100\,\mathrm{ms}$ | :dollar: |
+| Octave 4.2            | $88\,000\,\mathrm{ms}$  | **slow!!** :snail::snail::snail: |
+| Scilab                | $7\,800\,\mathrm{ms}$   | **slow!!** :snail::snail: |
+| Python native         | $4\,400\,\mathrm{ms}$   | **slow!** :snail: |
+| SciPy's `lfilter`     | $70\,\mathrm{ms}$     | many lines of C |
+| Python + `@numba.jit` | $50\,\mathrm{ms}$     | since $2012$    |
 
-> ```python
-> @numba.jit  # <- factor ×100 speed-up!
-> def smooth_jit(u, a):
->     y = np.zeros_like(u)
->     y[0] = (1-a)*u[0]
->     for k in range(1, len(u)):
->         y[k] = a*y[k-1] + (1-a)*u[k]
->     return y
->```
+*on a VM which adds an overhead of 20% to 40%,
+(so that 70 ms → 100 ms)
+
+
+---
+
+# (Matlab and Python implementations)
+
+```matlab
+function y = smooth(u, a)
+    y = zeros(length(u),1);
+    y(1) = (1-a)*u(1);
+    for k=2:length(u)
+        y(k) = a*y(k-1) + (1-a)*u(k);
+    end
+end
+```
+Python (optionally with [Numba](http://numba.pydata.org/)'s `jit` decorator)
+```python
+@numba.jit  # <- factor ×100 speed-up!
+def smooth_jit(u, a):
+    y = np.zeros_like(u)
+    y[0] = (1-a)*u[0]
+    for k in range(1, len(u)):
+        y[k] = a*y[k-1] + (1-a)*u[k]
+    return y
+```
 
 ---
 
